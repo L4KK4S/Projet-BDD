@@ -76,6 +76,41 @@ def load_genre():
             cursor.execute(sql, values)
             conn.commit()
 
+def load_preferer():
+    # Lecture du fichier CSV et insertion des données dans la base de données
+    with open('preferer.csv', 'r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            id_auteur = int(row['IdAuteur'])
+            id_genre = int(row['IdGenre'])
+
+            # Requête SQL pour insérer les données dans la table
+            sql = "INSERT INTO preférer (IdAuteur, IdGenre) VALUES (%s, %s)"
+            values = (id_auteur, id_genre)
+            
+            # Exécution de la requête SQL
+            cursor.execute(sql, values)
+            conn.commit()
+
+def load_livre():
+    # Lecture du fichier CSV et insertion des données dans la base de données
+    with open('livre.csv', 'r', encoding='utf-8') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            id_livre = row['IdLivre']
+            titre = row['Titre']
+            public = row['Public']
+            date_publication = row['AnnéeDePublication']
+            id_maison_edition = row['IdMaisonEdition']
+            id_genre = row['IdGenre']
+            
+            # Requête SQL pour insérer les données dans la table
+            sql = "INSERT INTO livre (IdLivre, Titre, Public, AnnéeDePublication, IdMaisonEdition, IdGenre) VALUES (%s, %s, %s, %s, %s, %s)"
+            values = (id_livre, titre, public, date_publication, id_maison_edition, id_genre)
+            
+            # Exécution de la requête SQL
+            cursor.execute(sql, values)
+            conn.commit()
 
 if __name__ == "__main__":
 
@@ -88,7 +123,7 @@ if __name__ == "__main__":
     )
     cursor = conn.cursor()
 
-    load_genre()
+    load_livre()
 
     # Fermeture de la connexion à la base de données
     cursor.close()
