@@ -1,4 +1,6 @@
-use miniprojetbddbd;
+DROP SCHEMA miniprojetbddbd;
+CREATE SCHEMA miniprojetbddbd;
+USE miniprojetbddbd;
 
 CREATE TABLE Auteur(
    IdAuteur INT,
@@ -32,33 +34,29 @@ CREATE TABLE MaisonEdition(
    SiteWeb VARCHAR(50) NOT NULL,
    IdAdresse INT NOT NULL,
    PRIMARY KEY(IdMaisonEdition),
-   FOREIGN KEY(IdAdresse) REFERENCES Adresse(IdAdresse)
+   FOREIGN KEY(IdAdresse) REFERENCES Adresse(IdAdresse) ON DELETE CASCADE
 );
 
 CREATE TABLE Livre(
-   ID VARCHAR(20),
-   Titre VARCHAR(50) NOT NULL,
-   Public VARCHAR(20) NOT NULL,
+   IdLivre INT,
+   Titre VARCHAR(100),
    AnnéeDePublication INT NOT NULL,
+   Public VARCHAR(30) NOT NULL,
    IdMaisonEdition INT NOT NULL,
    IdGenre INT NOT NULL,
-   PRIMARY KEY(ID),
-   FOREIGN KEY(IdMaisonEdition) REFERENCES MaisonEdition(IdMaisonEdition),
-   FOREIGN KEY(IdGenre) REFERENCES Genre(IdGenre)
-);
-
-CREATE TABLE Ecriture(
-   ID VARCHAR(20),
-   IdAuteur INT,
-   PRIMARY KEY(ID, IdAuteur),
-   FOREIGN KEY(ID) REFERENCES Livre(ID),
+   IdAuteur INT NOT NULL,
+   PRIMARY KEY(IdLivre),
+   FOREIGN KEY(IdMaisonEdition) REFERENCES MaisonEdition(IdMaisonEdition) ON DELETE CASCADE,
+   FOREIGN KEY(IdGenre) REFERENCES Genre(IdGenre),
    FOREIGN KEY(IdAuteur) REFERENCES Auteur(IdAuteur)
 );
+
 
 CREATE TABLE Preférer(
    IdAuteur INT,
    IdGenre INT,
    PRIMARY KEY(IdAuteur, IdGenre),
-   FOREIGN KEY(IdAuteur) REFERENCES Auteur(IdAuteur),
+   FOREIGN KEY(IdAuteur) REFERENCES Auteur(IdAuteur) ON DELETE CASCADE,
    FOREIGN KEY(IdGenre) REFERENCES Genre(IdGenre)
 );
+
