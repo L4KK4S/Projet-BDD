@@ -1,4 +1,3 @@
-DROP SCHEMA miniprojetbddbd;
 CREATE SCHEMA miniprojetbddbd;
 USE miniprojetbddbd;
 
